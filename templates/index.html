@@ -133,15 +133,17 @@
                         <div class="mt-4">
                             {% if product.stock > 0 %}
                             <a href="{{ url_for('add_to_cart', product_id=product.id) }}"
-                                class="w-full bg-indigo-600 text-white px-4 py-2 rounded-lg hover:bg-indigo-700 flex items-center justify-center dark:bg-indigo-700 dark:hover:bg-indigo-800">
-                                <i data-lucide="plus" class="w-5 h-5 mr-2"></i>
-                                Tambah ke Keranjang
-                            </a>
+   onclick="showLoading(this, event)"
+   class="w-full bg-indigo-600 text-white px-4 py-2 rounded-lg hover:bg-indigo-700 flex items-center justify-center dark:bg-indigo-700 dark:hover:bg-indigo-800">
+    <i data-lucide="plus" class="w-5 h-5 mr-2"></i>
+    Tambah ke Keranjang
+</a>
+
                             {% else %}
                             <button
                                 class="w-full bg-gray-300 text-gray-600 px-4 py-2 rounded-lg cursor-not-allowed dark:bg-gray-700 dark:text-gray-400"
                                 disabled>
-                                <i data-lucide="x-circleclass=" w-5 h-5 mr-2"></i>
+                                <i data-lucide="x-circle" class="w-5 h-5 mr-2"></i>
                                 Stok Habis
                             </button>
                             {% endif %}
@@ -161,6 +163,29 @@
 
         // Inisialisasi Lucide icons
         lucide.createIcons();
+
+        // Fungsi untuk menampilkan animasi loading saat tombol "Tambah ke Keranjang" ditekan
+        function showLoading(el, event) {
+        event.preventDefault(); // Mencegah navigasi langsung
+        // Tambahkan kelas agar tombol tidak bisa diklik berulang dan tampil transparan
+        el.classList.add('pointer-events-none', 'opacity-50');
+
+        // Buat elemen spinner menggunakan SVG dan kelas Tailwind untuk animasi
+        const spinner = document.createElement('svg');
+        spinner.setAttribute("class", "animate-spin h-5 w-5 mr-2 text-white");
+        spinner.setAttribute("xmlns", "http://www.w3.org/2000/svg");
+        spinner.setAttribute("fill", "none");
+        spinner.setAttribute("viewBox", "0 0 24 24");
+        spinner.innerHTML = '<circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"></path>';
+
+        // Sisipkan spinner di awal konten tombol
+        el.prepend(spinner);
+
+        // Setelah delay (misalnya 500ms) lanjutkan navigasi
+        setTimeout(function() {
+            window.location = el.getAttribute('href');
+        }, 500);
+    }
     </script>
 </body>
 
