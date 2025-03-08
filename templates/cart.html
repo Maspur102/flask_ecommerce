@@ -1,19 +1,23 @@
 <!DOCTYPE html>
 <html lang="id">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>MyStore - Keranjang</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://unpkg.com/lucide@latest"></script>
+    <script>
+        // Mengaktifkan dark mode berdasarkan localStorage atau preferensi sistem
+        if (localStorage.theme === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+            document.documentElement.classList.add('dark');
+        } else {
+            document.documentElement.classList.remove('dark');
+        }
+    </script>
 </head>
-
-</head>
-
-<body class="bg-gray-50">
+<body class="bg-gray-50 dark:bg-gray-900 transition-colors duration-300">
     <!-- Navbar Modern -->
-    <nav class="bg-white shadow-lg fixed w-full z-50">
+    <nav class="bg-white dark:bg-gray-800 shadow-lg fixed w-full z-50">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex justify-between h-16">
                 <div class="flex items-center">
@@ -28,7 +32,7 @@
                 </div>
 
                 <div class="hidden md:flex items-center space-x-8">
-                    <a href="{{ url_for('index') }}" class="flex items-center text-gray-700 hover:text-indigo-600">
+                    <a href="{{ url_for('index') }}" class="flex items-center text-gray-700 hover:text-indigo-600 dark:text-gray-300 dark:hover:text-indigo-400">
                         <i data-lucide="home" class="w-5 h-5 mr-1"></i>
                         Home
                     </a>
@@ -36,12 +40,12 @@
                         <i data-lucide="shopping-cart" class="w-5 h-5 mr-1"></i>
                         Keranjang
                     </a>
-                    <a href="{{ url_for('checkout') }}" class="flex items-center text-gray-700 hover:text-indigo-600">
+                    <a href="{{ url_for('checkout') }}" class="flex items-center text-gray-700 hover:text-indigo-600 dark:text-gray-300 dark:hover:text-indigo-400">
                         <i data-lucide="credit-card" class="w-5 h-5 mr-1"></i>
                         Checkout
                     </a>
                     <a href="{{ url_for('admin_dashboard') }}"
-                        class="flex items-center text-gray-700 hover:text-indigo-600">
+                        class="flex items-center text-gray-700 hover:text-indigo-600 dark:text-gray-300 dark:hover:text-indigo-400">
                         <i data-lucide="shield" class="w-5 h-5 mr-1"></i>
                         Admin
                     </a>
@@ -51,11 +55,11 @@
     </nav>
 
     <!-- Sidebar Mobile -->
-    <div id="sidebar" class="fixed left-[-300px] top-0 h-full w-64 bg-white shadow-lg transition-all duration-300 z-50">
-        <div class="p-4 border-b">
+    <div id="sidebar" class="fixed left-[-300px] top-0 h-full w-64 bg-white dark:bg-gray-800 shadow-lg transition-all duration-300 z-50">
+        <div class="p-4 border-b dark:border-gray-700">
             <div class="flex justify-between items-center">
-                <h2 class="text-xl font-bold text-indigo-600">Menu</h2>
-                <button onclick="toggleSidebar()" class="p-2 hover:bg-gray-100 rounded-lg">
+                <h2 class="text-xl font-bold text-indigo-600 dark:text-indigo-400">Menu</h2>
+                <button onclick="toggleSidebar()" class="p-2 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg">
                     <i data-lucide="x" class="w-6 h-6"></i>
                 </button>
             </div>
@@ -63,22 +67,22 @@
         <div class="p-4">
             <nav class="space-y-2">
                 <a href="{{ url_for('index') }}"
-                    class="flex items-center p-2 text-gray-700 hover:bg-gray-100 rounded-lg">
+                    class="flex items-center p-2 text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-700 rounded-lg">
                     <i data-lucide="home" class="w-5 h-5 mr-3"></i>
                     Home
                 </a>
                 <a href="{{ url_for('view_cart') }}"
-                    class="flex items-center p-2 bg-indigo-50 text-indigo-600 rounded-lg">
+                    class="flex items-center p-2 bg-indigo-50 text-indigo-600 dark:bg-indigo-900 dark:text-indigo-400 rounded-lg">
                     <i data-lucide="shopping-cart" class="w-5 h-5 mr-3"></i>
                     Keranjang
                 </a>
                 <a href="{{ url_for('checkout') }}"
-                    class="flex items-center p-2 text-gray-700 hover:bg-gray-100 rounded-lg">
+                    class="flex items-center p-2 text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-700 rounded-lg">
                     <i data-lucide="credit-card" class="w-5 h-5 mr-3"></i>
                     Checkout
                 </a>
                 <a href="{{ url_for('admin_dashboard') }}"
-                    class="flex items-center p-2 text-gray-700 hover:bg-gray-100 rounded-lg">
+                    class="flex items-center p-2 text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-700 rounded-lg">
                     <i data-lucide="shield" class="w-5 h-5 mr-3"></i>
                     Admin
                 </a>
@@ -90,13 +94,13 @@
     <main class="pt-20 pb-8 px-4 md:px-8">
         <div class="max-w-7xl mx-auto">
             <div class="flex flex-col md:flex-row justify-between items-start md:items-center mb-6 gap-4">
-                <h1 class="text-3xl font-bold text-gray-800">
+                <h1 class="text-3xl font-bold text-gray-800 dark:text-gray-300">
                     <i data-lucide="shopping-cart" class="w-8 h-8 mr-2 inline-block"></i>
                     Keranjang Belanja
                 </h1>
                 <div class="flex gap-3">
                     <a href="{{ url_for('index') }}"
-                        class="bg-gray-200 text-gray-700 px-4 py-2 rounded-lg hover:bg-gray-300 flex items-center">
+                        class="bg-gray-200 text-gray-700 px-4 py-2 rounded-lg hover:bg-gray-300 dark:bg-gray-700 dark:text-gray-200 dark:hover:bg-gray-600 flex items-center">
                         <i data-lucide="arrow-left" class="w-5 h-5 mr-2"></i>
                         Kembali ke Produk
                     </a>
@@ -109,26 +113,27 @@
             </div>
 
             <!-- Cart Items -->
-            <div class="bg-white rounded-xl shadow-md overflow-hidden">
-                <div class="divide-y divide-gray-200">
+            <div class="bg-white dark:bg-gray-800 rounded-xl shadow-md overflow-hidden">
+                <div class="divide-y divide-gray-200 dark:divide-gray-700">
                     {% for item in cart %}
                     <div class="p-6 flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
                         <div class="flex-1">
-                            <h3 class="text-lg font-semibold text-gray-800">{{ item.name }}</h3>
-                            <p class="text-gray-600 mt-1">Rp{{ item.price }} per item</p>
+                            <h3 class="text-lg font-semibold text-gray-800 dark:text-gray-300">{{ item.name }}</h3>
+                            <p class="text-gray-600 dark:text-gray-400 mt-1">Rp{{ item.price }} per item</p>
                         </div>
 
                         <div class="flex items-center gap-6">
                             <div class="flex items-center gap-4">
-                                <span class="bg-gray-100 px-3 py-1 rounded-lg">
-                                    Jumlah: {{ item.quantity }}
-                                </span>
-                                <p class="text-lg font-bold text-indigo-600">
+                                <span class="bg-gray-100 dark:bg-gray-700 text-gray-800 dark:text-gray-300 px-3 py-1 rounded-lg">
+    Jumlah: {{ item.quantity }}
+</span>
+
+                                <p class="text-lg font-bold text-indigo-600 dark:text-indigo-400">
                                     Rp{{ item.price * item.quantity }}
                                 </p>
                             </div>
                             <a href="{{ url_for('remove_from_cart', cart_id=item.id) }}"
-                                class="p-2 hover:bg-red-50 rounded-lg text-red-600 hover:text-red-700 transition-colors">
+                                class="p-2 hover:bg-red-50 dark:hover:bg-red-900 rounded-lg text-red-600 hover:text-red-700 transition-colors">
                                 <i data-lucide="trash-2" class="w-5 h-5"></i>
                             </a>
                         </div>
@@ -137,10 +142,10 @@
                 </div>
 
                 <!-- Total -->
-                <div class="p-6 border-t bg-gray-50">
+                <div class="p-6 border-t bg-gray-50 dark:bg-gray-900">
                     <div class="flex justify-between items-center">
-                        <h4 class="text-xl font-bold text-gray-800">Total Pembayaran</h4>
-                        <p class="text-2xl font-bold text-indigo-600">Rp{{ total }}</p>
+                        <h4 class="text-xl font-bold text-gray-800 dark:text-gray-300">Total Pembayaran</h4>
+                        <p class="text-2xl font-bold text-indigo-600 dark:text-indigo-400">Rp{{ total }}</p>
                     </div>
                 </div>
             </div>
@@ -156,5 +161,4 @@
         lucide.createIcons();
     </script>
 </body>
-
 </html>

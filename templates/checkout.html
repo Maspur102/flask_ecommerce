@@ -1,6 +1,5 @@
 <!DOCTYPE html>
-<html lang="id">
-
+<html lang="id" class="dark">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,11 +7,19 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://unpkg.com/lucide@latest"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script>
+        // Aktifkan dark mode berdasarkan preferensi sistem atau localStorage
+        if (localStorage.theme === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+            document.documentElement.classList.add('dark');
+        } else {
+            document.documentElement.classList.remove('dark');
+        }
+    </script>
 </head>
 
-<body class="bg-gray-50">
+<body class="bg-gray-50 dark:bg-gray-900 transition-colors duration-300">
     <!-- Navbar Modern -->
-    <nav class="bg-white shadow-lg fixed w-full z-50">
+    <nav class="bg-white dark:bg-gray-800 shadow-lg fixed w-full z-50">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex justify-between h-16">
                 <div class="flex items-center">
@@ -27,7 +34,7 @@
                 </div>
 
                 <div class="hidden md:flex items-center space-x-8">
-                    <a href="{{ url_for('index') }}" class="flex items-center text-gray-700 hover:text-indigo-600">
+                    <a href="{{ url_for('index') }}" class="flex items-center text-gray-700 hover:text-indigo-600 dark:text-gray-300 dark:hover:text-indigo-400">
                         <i data-lucide="home" class="w-5 h-5 mr-1"></i>
                         Home
                     </a>
@@ -35,12 +42,12 @@
                         <i data-lucide="shopping-cart" class="w-5 h-5 mr-1"></i>
                         Keranjang
                     </a>
-                    <a href="{{ url_for('checkout') }}" class="flex items-center text-gray-700 hover:text-indigo-600">
+                    <a href="{{ url_for('checkout') }}" class="flex items-center text-gray-700 hover:text-indigo-600 dark:text-gray-300 dark:hover:text-indigo-400">
                         <i data-lucide="credit-card" class="w-5 h-5 mr-1"></i>
                         Checkout
                     </a>
                     <a href="{{ url_for('admin_dashboard') }}"
-                        class="flex items-center text-gray-700 hover:text-indigo-600">
+                        class="flex items-center text-gray-700 hover:text-indigo-600 dark:text-gray-300 dark:hover:text-indigo-400">
                         <i data-lucide="shield" class="w-5 h-5 mr-1"></i>
                         Admin
                     </a>
@@ -49,11 +56,11 @@
         </div>
     </nav>
     <!-- Sidebar Mobile -->
-    <div id="sidebar" class="fixed left-[-300px] top-0 h-full w-64 bg-white shadow-lg transition-all duration-300 z-50">
-        <div class="p-4 border-b">
+    <div id="sidebar" class="fixed left-[-300px] top-0 h-full w-64 bg-white dark:bg-gray-800 shadow-lg transition-all duration-300 z-50">
+        <div class="p-4 border-b dark:border-gray-700">
             <div class="flex justify-between items-center">
-                <h2 class="text-xl font-bold text-indigo-600">Menu</h2>
-                <button onclick="toggleSidebar()" class="p-2 hover:bg-gray-100 rounded-lg">
+                <h2 class="text-xl font-bold text-indigo-600 dark:text-indigo-400">Menu</h2>
+                <button onclick="toggleSidebar()" class="p-2 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg">
                     <i data-lucide="x" class="w-6 h-6"></i>
                 </button>
             </div>
@@ -61,22 +68,22 @@
         <div class="p-4">
             <nav class="space-y-2">
                 <a href="{{ url_for('index') }}"
-                    class="flex items-center p-2 text-gray-700 hover:bg-gray-100 rounded-lg">
+                    class="flex items-center p-2 text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-700 rounded-lg">
                     <i data-lucide="home" class="w-5 h-5 mr-3"></i>
                     Home
                 </a>
                 <a href="{{ url_for('view_cart') }}"
-                    class="flex items-center p-2 bg-indigo-50 text-indigo-600 rounded-lg">
+                    class="flex items-center p-2 bg-indigo-50 text-indigo-600 dark:bg-indigo-900 dark:text-indigo-400 rounded-lg">
                     <i data-lucide="shopping-cart" class="w-5 h-5 mr-3"></i>
                     Keranjang
                 </a>
                 <a href="{{ url_for('checkout') }}"
-                    class="flex items-center p-2 text-gray-700 hover:bg-gray-100 rounded-lg">
+                    class="flex items-center p-2 text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-700 rounded-lg">
                     <i data-lucide="credit-card" class="w-5 h-5 mr-3"></i>
                     Checkout
                 </a>
                 <a href="{{ url_for('admin_dashboard') }}"
-                    class="flex items-center p-2 text-gray-700 hover:bg-gray-100 rounded-lg">
+                    class="flex items-center p-2 text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-700 rounded-lg">
                     <i data-lucide="shield" class="w-5 h-5 mr-3"></i>
                     Admin
                 </a>
@@ -86,74 +93,74 @@
 
     <!-- Main Content -->
     <main class="pt-20 pb-8 md:px-8">
-    <div class=" max-w-7xl mx-auto">
-        <div class="bg-white rounded-xl shadow-md overflow-hidden">
-            <!-- Checkout Header -->
-            <div class="bg-indigo-600 p-6">
-                <h1 class="text-2xl font-bold text-white">
-                    <i class="fas fa-cash-register mr-3"></i>Checkout Pembayaran
-                </h1>
-            </div>
-
-            <div class="p-6">
-                <!-- Order Summary -->
-                <div class="mb-8">
-                    <h2 class="text-xl font-semibold mb-4">Ringkasan Pesanan</h2>
-                    <div class="space-y-4">
-                        {% for item in cart %}
-                        <div class="flex items-center justify-between p-4 bg-gray-50 rounded-lg">
-                            <div>
-                                <h3 class="font-medium">{{ item.name }}</h3>
-                                <p class="text-sm text-gray-500">
-                                    {{ item.quantity }} x Rp{{ item.price }}
-                                </p>
-                            </div>
-                            <span class="font-semibold">
-                                Rp{{ item.price * item.quantity }}
-                            </span>
-                        </div>
-                        {% endfor %}
-                    </div>
+        <div class="max-w-7xl mx-auto">
+            <div class="bg-white dark:bg-gray-800 rounded-xl shadow-md overflow-hidden">
+                <!-- Checkout Header -->
+                <div class="bg-indigo-600 p-6">
+                    <h1 class="text-2xl font-bold text-white">
+                        <i class="fas fa-cash-register mr-3"></i>Checkout Pembayaran
+                    </h1>
                 </div>
 
-                <!-- Payment Section -->
-                <div class="grid md:grid-cols-2 gap-8">
-                    <!-- Payment Details -->
-                    <div>
-                        <h2 class="text-xl font-semibold mb-4">Detail Pembayaran</h2>
-                        <div class="bg-indigo-50 p-6 rounded-xl">
-                            <div class="flex justify-between mb-4">
-                                <span>Total Belanja:</span>
-                                <span class="font-bold text-indigo-600">Rp{{ total }}</span>
+                <div class="p-6">
+                    <!-- Order Summary -->
+                    <div class="mb-8">
+                        <h2 class="text-xl font-semibold mb-4 dark:text-gray-300">Ringkasan Pesanan</h2>
+                        <div class="space-y-4">
+                            {% for item in cart %}
+                            <div class="flex items-center justify-between p-4 bg-gray-50 dark:bg-gray-700 rounded-lg">
+                                <div>
+                                    <h3 class="font-medium dark:text-gray-300">{{ item.name }}</h3>
+                                    <p class="text-sm text-gray-500 dark:text-gray-400">
+                                        {{ item.quantity }} x Rp{{ item.price }}
+                                    </p>
+                                </div>
+                                <span class="font-semibold dark:text-gray-300">
+                                    Rp{{ item.price * item.quantity }}
+                                </span>
                             </div>
-
-                            <form action="{{ url_for('checkout') }}" method="post">
-                                <button type="submit" class="w-full bg-indigo-600 text-white py-3 px-6 rounded-lg hover:bg-indigo-700 transition 
-                                         flex items-center justify-center">
-                                    <i class="fas fa-lock mr-2"></i>
-                                    Lanjutkan Pembayaran
-                                </button>
-                            </form>
+                            {% endfor %}
                         </div>
                     </div>
 
-                    <!-- Payment Methods -->
-                    <div>
-                        <h2 class="text-xl font-semibold mb-4">Metode Pembayaran</h2>
-                        <div class="space-y-4">
-                            <div class="flex items-center p-4 border rounded-lg hover:border-indigo-400 transition">
-                                <i class="fas fa-qrcode text-3xl text-indigo-600 mr-4"></i>
-                                <div>
-                                    <h3 class="font-medium">QRIS</h3>
-                                    <p class="text-sm text-gray-500">Scan kode QR melalui aplikasi e-wallet</p>
+                    <!-- Payment Section -->
+                    <div class="grid md:grid-cols-2 gap-8">
+                        <!-- Payment Details -->
+                        <div>
+                            <h2 class="text-xl font-semibold mb-4 dark:text-gray-300">Detail Pembayaran</h2>
+                            <div class="bg-indigo-50 dark:bg-indigo-900 p-6 rounded-xl">
+                                <div class="flex justify-between mb-4">
+                                    <span class="dark:text-gray-300">Total Belanja:</span>
+                                    <span class="font-bold text-indigo-600 dark:text-indigo-400">Rp{{ total }}</span>
                                 </div>
-                            </div>
 
-                            <div class="flex items-center p-4 border rounded-lg hover:border-indigo-400 transition">
-                                <i class="fab fa-cc-visa text-3xl text-blue-600 mr-4"></i>
-                                <div>
-                                    <h3 class="font-medium">Kartu Kredit/Debit</h3>
-                                    <p class="text-sm text-gray-500">Visa, Mastercard, JCB</p>
+                                <form action="{{ url_for('checkout') }}" method="post">
+                                    <button type="submit" class="w-full bg-indigo-600 text-white py-3 px-6 rounded-lg hover:bg-indigo-700 transition flex items-center justify-center">
+                                        <i class="fas fa-lock mr-2"></i>
+                                        Lanjutkan Pembayaran
+                                    </button>
+                                </form>
+                            </div>
+                        </div>
+
+                        <!-- Payment Methods -->
+                        <div>
+                            <h2 class="text-xl font-semibold mb-4 dark:text-gray-300">Metode Pembayaran</h2>
+                            <div class="space-y-4">
+                                <div class="flex items-center p-4 border rounded-lg hover:border-indigo-400 dark:border-gray-700 dark:hover:border-indigo-300 transition">
+                                    <i class="fas fa-qrcode text-3xl text-indigo-600 mr-4"></i>
+                                    <div>
+                                        <h3 class="font-medium dark:text-gray-300">QRIS</h3>
+                                        <p class="text-sm text-gray-500 dark:text-gray-400">Scan kode QR melalui aplikasi e-wallet</p>
+                                    </div>
+                                </div>
+
+                                <div class="flex items-center p-4 border rounded-lg hover:border-indigo-400 dark:border-gray-700 dark:hover:border-indigo-300 transition">
+                                    <i class="fab fa-cc-visa text-3xl text-blue-600 mr-4"></i>
+                                    <div>
+                                        <h3 class="font-medium dark:text-gray-300">Kartu Kredit/Debit</h3>
+                                        <p class="text-sm text-gray-500 dark:text-gray-400">Visa, Mastercard, JCB</p>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -161,8 +168,7 @@
                 </div>
             </div>
         </div>
-    </div>
-</main>
+    </main>
     <script src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
     <script>
         function toggleSidebar() {
@@ -173,5 +179,4 @@
         lucide.createIcons();
     </script>
 </body>
-
 </html>
